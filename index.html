@@ -86,7 +86,7 @@
                 </div>
                 <div>
                     <h1 class="font-tech font-bold text-xl tracking-wider text-slate-800 uppercase flex items-center gap-2">
-                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v3.1 Local Assets</span>
+                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v3.3 Halo & Dossier</span>
                     </h1>
                     <p class="text-xs text-slate-500">Kivotos Student & Tactical Archive</p>
                 </div>
@@ -143,7 +143,7 @@
         </div>
     </main>
 
-    <!-- Character Details Modal (Split 2-Column Layout) -->
+    <!-- Character Details Modal (Split 2-Column Dossier Layout) -->
     <div id="charModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 hidden transition-opacity duration-200 opacity-0">
         <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-100 flex flex-col md:flex-row relative transform scale-95 transition-transform duration-200" id="modalContainer">
             
@@ -153,7 +153,7 @@
             </button>
 
             <!-- LEFT COLUMN: Full Character Portrait Panel -->
-            <div class="w-full md:w-5/12 bg-gradient-to-b from-slate-900 via-schale-900 to-slate-900 flex items-center justify-center relative overflow-hidden min-h-[320px] md:min-h-full p-4 border-b md:border-b-0 md:border-r border-slate-700/50">
+            <div class="w-full md:w-5/12 bg-gradient-to-b from-slate-900 via-schale-900 to-slate-900 flex items-end justify-center relative overflow-hidden min-h-[320px] md:min-h-full p-4 border-b md:border-b-0 md:border-r border-slate-700/50">
                 <!-- Glowing background accent -->
                 <div class="absolute w-64 h-64 bg-schale-500/20 rounded-full blur-3xl -z-0"></div>
                 
@@ -166,8 +166,8 @@
                 
                 <!-- Header Section -->
                 <div class="bg-slate-900 text-white p-6 pb-5 flex items-center gap-4 border-b border-slate-800">
-                    <!-- Circle reserved for Halo / Icon later -->
-                    <div class="w-14 h-14 rounded-full border-2 border-schale-400 overflow-hidden bg-slate-800 flex-shrink-0 shadow-inner flex items-center justify-center halo-glow">
+                    <!-- Dynamic Halo Container -->
+                    <div id="modalHaloContainer" class="w-14 h-14 rounded-full border-2 border-schale-400 bg-slate-800 flex-shrink-0 shadow-inner flex items-center justify-center p-2 halo-glow">
                         <i data-lucide="sparkles" class="w-6 h-6 text-schale-400"></i>
                     </div>
                     <div>
@@ -274,7 +274,7 @@
 
     <!-- Application Script -->
     <script>
-        // Character Database Array using local images folder paths
+        // Character Database Array with local WebP portrait and halo paths
         const characters = [
             {
                 id: 'shiroko',
@@ -287,6 +287,7 @@
                 defenseType: 'Light',
                 title: 'The Taciturn Bank Robber Enthusiast',
                 image: 'images/Shiroko_Portrait.webp',
+                halo: 'images/Shiroko_Halo.webp',
                 lore: 'A quiet, athletic student of Abydos High School who loves cycling and physical exercise. Beneath her stoic exterior, she possesses an oddly reckless side and a surprising knack for planning bank robberies whenever financial trouble strikes.',
                 quirks: [
                     'Very quiet and concise in speech; rarely wastes words.',
@@ -306,6 +307,7 @@
                 defenseType: 'Heavy',
                 title: 'President of the Foreclosure Task Force',
                 image: 'images/Hoshino_Portrait.webp',
+                halo: 'images/Hoshino_Halo.webp',
                 lore: 'A 3rd-year student who often talks like an old man and loves taking naps. Though she presents herself as lazy and reliable-for-nothing, she carries a tragic past and is one of Kivotos’ most formidable combatants when forced to protect her friends.',
                 quirks: [
                     'Refers to herself as "oji-san" (old guy).',
@@ -325,6 +327,7 @@
                 defenseType: 'Light',
                 title: 'Self-Proclaimed Outlaw Boss',
                 image: 'images/aru.png',
+                halo: '',
                 lore: 'President of Problem Solver 68, an illegal mercenary group. Aru desperately wants to be viewed as a ruthless, hardboiled villain, but her innate kindness and frequent miscalculations always lead her into chaotic, comical failures.',
                 quirks: [
                     'Tries hard to sound cool and sinister, but panics easily when plans derail.',
@@ -344,6 +347,7 @@
                 defenseType: 'Heavy',
                 title: 'Head of the Gehenna Prefect Team',
                 image: 'images/hina.png',
+                halo: '',
                 lore: 'The fearsome and overworked President of the Disciplinary Committee. Though revered and feared across Kivotos for her overwhelming combat strength, she is privately exhausted and craves rest and praise from Sensei.',
                 quirks: [
                     'Exhausted from constantly breaking up Gehenna chaos.',
@@ -363,6 +367,7 @@
                 defenseType: 'Heavy',
                 title: 'Former Tea Party Patron',
                 image: 'images/mika.png',
+                halo: '',
                 lore: 'A former leader of Trinity’s student council. Behind her innocent, princess-like demeanor and pink aesthetic lies immense physical strength and complex emotional trauma tied to the conflict between Trinity and Arius.',
                 quirks: [
                     'Uses cute speech quirks ("Wahaha", "Sensei!").',
@@ -382,6 +387,7 @@
                 defenseType: 'Heavy',
                 title: 'Host of the Tea Party',
                 image: 'images/nagisa.png',
+                halo: '',
                 lore: 'Current acting head of Trinity General School. She is elegant, cultured, and loves black tea and cake rolls, but her deep paranoia regarding political traitors led her into extreme decisions during the Eden Treaty crisis.',
                 quirks: [
                     'Obsessed with black tea and serving roll cakes.',
@@ -401,6 +407,7 @@
                 defenseType: 'Heavy',
                 title: 'Treasurer of Seminar',
                 image: 'images/yuuka.png',
+                halo: '',
                 lore: 'The logical and hardworking treasurer of Millennium Science School. She manages the school\'s budget with an iron fist, constantly scolding Sensei and other clubs for careless spending, yet deeply cares for everyone.',
                 quirks: [
                     'Calculates statistics and budgets mentally in seconds.',
@@ -420,6 +427,7 @@
                 defenseType: 'Special',
                 title: 'The Gaming Android Daughter',
                 image: 'images/alice.png',
+                halo: '',
                 lore: 'A mysterious robot discovered in ancient ruins who learned human speech and emotion entirely through retro RPG video games. She wields a massive battleship railgun like a hero from an adventure quest.',
                 quirks: [
                     'Speaks in retro video game terminology ("Alice has leveled up!", "Quest accepted!").',
@@ -439,6 +447,7 @@
                 defenseType: 'Special',
                 title: 'Leader of Arius Squad',
                 image: 'images/saori.png',
+                halo: '',
                 lore: 'A battle-hardened student raised in the bleak, abusive environment of the Arius Branch School. Formerly driven by hatred, she learned to look past her indoctrination and now works independently to protect her squad mates.',
                 quirks: [
                     'Serious, stoic, and highly vigilant in military tactics.',
@@ -458,6 +467,7 @@
                 defenseType: 'Heavy',
                 title: 'Captain of RABBIT 1',
                 image: 'images/miyako.png',
+                halo: '',
                 lore: 'The disciplined captain of SRT Special Academy’s RABBIT Squad. After SRT was abruptly closed, she and her team camped out in a public park to protest, maintaining strict military etiquette under hard living conditions.',
                 quirks: [
                     'Maintains rigid military discipline even while living in a park tent.',
@@ -477,6 +487,7 @@
                 defenseType: 'Heavy',
                 title: 'Chief of the Public Security Bureau',
                 image: 'images/kanna.png',
+                halo: '',
                 lore: 'Known as the "Mad Dog of Valkyrie", Kanna is the overworked Chief of Police in Kivotos. While cynical about administrative politics, she possesses a strong sense of core justice when citizens are endangered.',
                 quirks: [
                     'Constantly tired, drinking black coffee, and dealing with paperwork.',
@@ -502,6 +513,7 @@
         const modalContainer = document.getElementById('modalContainer');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const modalImg = document.getElementById('modalImg');
+        const modalHaloContainer = document.getElementById('modalHaloContainer');
         const modalName = document.getElementById('modalName');
         const modalTitle = document.getElementById('modalTitle');
         const modalAcademyBadge = document.getElementById('modalAcademyBadge');
@@ -579,13 +591,17 @@
                 <div onclick="openModal('${char.id}')" 
                      class="glass-panel bg-white/90 rounded-2xl p-5 border border-slate-100 shadow-sm halo-glow-hover transition-all duration-200 cursor-pointer flex flex-col justify-between group">
                     <div>
-                        <!-- Card Top Badge & Avatar -->
+                        <!-- Card Top Badge & Halo Circle -->
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-schale-50 text-schale-600 border border-schale-200">
                                 ${char.academy}
                             </span>
-                            <div class="w-14 h-14 rounded-full border-2 border-schale-400 overflow-hidden bg-slate-900 shadow-sm group-hover:scale-105 transition-transform flex items-center justify-center">
-                                <img src="${char.image}" alt="${char.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/60/0f172a/38bdf8?text=Halo'">
+                            <div class="w-12 h-12 rounded-full border-2 border-schale-400 bg-slate-900 shadow-sm group-hover:scale-110 transition-transform flex items-center justify-center p-2 halo-glow">
+                                ${char.halo ? `
+                                    <img src="${char.halo}" alt="${char.name} Halo" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(77,238,234,0.6)]">
+                                ` : `
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-schale-400"></i>
+                                `}
                             </div>
                         </div>
 
@@ -632,6 +648,14 @@
             activeStudentForCopy = char;
 
             modalImg.src = char.image;
+            
+            if (char.halo) {
+                modalHaloContainer.innerHTML = `<img src="${char.halo}" alt="${char.name} Halo" class="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(77,238,234,0.8)]">`;
+            } else {
+                modalHaloContainer.innerHTML = `<i data-lucide="sparkles" class="w-6 h-6 text-schale-400"></i>`;
+                lucide.createIcons();
+            }
+
             modalName.textContent = char.name;
             modalTitle.textContent = char.title;
             modalAcademyBadge.textContent = char.academy + ' Academy';
@@ -695,7 +719,7 @@
 
             copyProfileBtn.addEventListener('click', () => {
                 if (!activeStudentForCopy) return;
-                const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n')}\n`;
+                const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks.q.map ? activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n') : ''}\n`;
                 
                 scratchpadText.value += formatted;
                 saveScratchpad();
