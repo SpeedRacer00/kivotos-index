@@ -58,6 +58,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     input, select {
@@ -72,6 +73,22 @@
 
     input:focus, select:focus {
       border-color: var(--accent-cyan);
+    }
+
+    .btn {
+      background-color: var(--accent-cyan);
+      color: var(--bg-dark);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+      color: #fff;
     }
 
     .container {
@@ -210,6 +227,7 @@
       border: 3px solid var(--accent-cyan);
       object-fit: cover;
       background-color: var(--bg-dark);
+      flex-shrink: 0;
     }
 
     .modal-info h2 {
@@ -243,6 +261,58 @@
       text-transform: uppercase;
       margin-bottom: 0.3rem;
     }
+
+    /* Writer's Scratchpad Drawer */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background-color: var(--panel-bg);
+      border-left: 2px solid var(--accent-cyan);
+      box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+      transition: right 0.3s ease;
+      z-index: 200;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.8rem;
+    }
+
+    .drawer-header h3 {
+      color: var(--accent-cyan);
+    }
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.95rem;
+      resize: none;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--accent-cyan);
+    }
   </style>
 </head>
 <body>
@@ -260,7 +330,9 @@
         <option value="Gehenna">Gehenna</option>
         <option value="Trinity">Trinity</option>
         <option value="Millennium">Millennium</option>
+        <option value="Arius">Arius</option>
       </select>
+      <button class="btn" id="notesBtn">Scratchpad</button>
     </div>
   </header>
 
@@ -290,9 +362,17 @@
     </div>
   </div>
 
+  <!-- Side Notes Drawer -->
+  <div class="drawer" id="notesDrawer">
+    <div class="drawer-header">
+      <h3>Writer's Scratchpad</h3>
+      <button class="close-btn" id="closeDrawerBtn" style="position: static;">&times;</button>
+    </div>
+    <textarea id="scratchpad" placeholder="Draft your fanfic scenes, character notes, or dialogue concepts here... (Auto-saves automatically!)"></textarea>
+  </div>
+
   <script>
-    // Character database array
-    // Point 'image' directly to your uploaded files inside the /images folder!
+    // Character database array using direct web image URLs
     const students = [
       {
         id: "shiroko",
@@ -301,7 +381,7 @@
         club: "Foreclosure Task Force",
         weapon: "Assault Rifle (WHITE FANG 465)",
         role: "Attacker / Front",
-        image: "images/shiroko.png",
+        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10000.png",
         lore: "Quiet, athletic, and fiercely loyal to Abydos. Has a surprising obsession with tactical planning and robbing banks for school debt resolution."
       },
       {
@@ -311,7 +391,7 @@
         club: "Prefect Team",
         weapon: "Machine Gun (End: Innovator)",
         role: "Attacker / Back",
-        image: "images/hina.png",
+        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10002.png",
         lore: "Head of the Gehenna Prefect Team. Exhausted by constant bureaucracy and chaos, but remains exceptionally capable and resolute in combat."
       },
       {
@@ -321,7 +401,7 @@
         club: "Tea Party",
         weapon: "Submachine Gun (Quinquaginta)",
         role: "Attacker / Front",
-        image: "images/mika.png",
+        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10060.png",
         lore: "Former Tea Party governor with immense physical strength and tragic narrative depth. Emotional, impulsive, but deeply protective."
       },
       {
@@ -331,7 +411,7 @@
         club: "Seminar",
         weapon: "Dual SMGs (Logic & Reason)",
         role: "Tank / Front",
-        image: "images/yuuka.png",
+        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10001.png",
         lore: "Treasurer of Seminar. Direct, mathematical, and strict with budgets, but cares deeply for Sensei and Millennium's students."
       }
     ];
@@ -342,6 +422,12 @@
     const modalOverlay = document.getElementById('modalOverlay');
     const closeBtn = document.getElementById('closeBtn');
 
+    // Scratchpad elements
+    const notesBtn = document.getElementById('notesBtn');
+    const notesDrawer = document.getElementById('notesDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const scratchpad = document.getElementById('scratchpad');
+
     function renderStudents(list) {
       container.innerHTML = '';
       list.forEach(student => {
@@ -349,7 +435,7 @@
         card.className = 'student-card';
         card.innerHTML = `
           <div class="avatar-container">
-            <img src="${student.image}" alt="${student.name}" class="student-avatar" onerror="this.src='https://via.placeholder.com/100/1e293b/38bdf8?text=Halo'">
+            <img src="${student.image}" alt="${student.name}" class="student-avatar" onerror="this.src='https://via.placeholder.com/90/1e293b/38bdf8?text=Halo'">
           </div>
           <div class="student-name">${student.name}</div>
           <div class="student-school">${student.school}</div>
@@ -383,6 +469,16 @@
 
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+    });
+
+    // Scratchpad drawer listeners
+    notesBtn.addEventListener('click', () => notesDrawer.classList.add('open'));
+    closeDrawerBtn.addEventListener('click', () => notesDrawer.classList.remove('open'));
+
+    // Persistent storage for scratchpad
+    scratchpad.value = localStorage.getItem('ba_writer_notes') || '';
+    scratchpad.addEventListener('input', () => {
+      localStorage.setItem('ba_writer_notes', scratchpad.value);
     });
 
     function filterData() {
