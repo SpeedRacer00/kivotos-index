@@ -1,504 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Archive Character Reference</title>
-  <style>
-    :root {
-      --bg-dark: #0f172a;
-      --panel-bg: #1e293b;
-      --card-bg: #334155;
-      --accent-cyan: #38bdf8;
-      --accent-hover: #0284c7;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: #475569;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schale Database - Blue Archive Character Reference</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Inter and Rajdhani for high-tech sci-fi UI feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        schale: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        ba: {
+                            blue: '#00a3ff',
+                            halo: '#4deeea',
+                            dark: '#0f172a',
+                            light: '#f8fafc',
+                            card: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom UI Styling for Blue Archive Halo Aesthetic */
+        body {
+            background: linear-gradient(135deg, #eef2f6 0%, #e0e7ff 50%, #f0f9ff 100%);
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        /* Glassmorphic UI element */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        .halo-glow {
+            box-shadow: 0 0 15px rgba(0, 163, 255, 0.25);
+        }
 
-    header {
-      background-color: var(--panel-bg);
-      padding: 1.5rem 2rem;
-      border-bottom: 2px solid var(--accent-cyan);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+        .halo-glow-hover:hover {
+            box-shadow: 0 0 20px rgba(0, 163, 255, 0.4);
+            transform: translateY(-2px);
+        }
 
-    .title-group h1 {
-      font-size: 1.8rem;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .title-group p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .controls {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    input, select {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 0.6rem 1rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--accent-cyan);
-    }
-
-    .btn {
-      background-color: var(--accent-cyan);
-      color: var(--bg-dark);
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .btn:hover {
-      background-color: var(--accent-hover);
-      color: #fff;
-    }
-
-    .container {
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .student-card {
-      background-color: var(--panel-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.2rem;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .student-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-cyan);
-      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.2);
-    }
-
-    /* Portrait Image Styling */
-    .avatar-container {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 3px solid var(--accent-cyan);
-      overflow: hidden;
-      margin-bottom: 1rem;
-      background-color: var(--bg-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .student-avatar {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .student-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 0.2rem;
-    }
-
-    .student-school {
-      font-size: 0.85rem;
-      color: var(--accent-cyan);
-      margin-bottom: 0.8rem;
-    }
-
-    .badges {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      background-color: var(--card-bg);
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-    }
-
-    /* Modal Overlay */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      z-index: 100;
-    }
-
-    .modal-content {
-      background-color: var(--panel-bg);
-      border: 2px solid var(--accent-cyan);
-      border-radius: 12px;
-      width: 100%;
-      max-width: 550px;
-      padding: 2rem;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .close-btn:hover {
-      color: var(--accent-cyan);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid var(--accent-cyan);
-      object-fit: cover;
-      background-color: var(--bg-dark);
-      flex-shrink: 0;
-    }
-
-    .modal-info h2 {
-      color: var(--accent-cyan);
-      font-size: 1.5rem;
-    }
-
-    .modal-info p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .modal-body {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .modal-section {
-      background-color: var(--bg-dark);
-      padding: 0.8rem 1rem;
-      border-radius: 6px;
-      border-left: 3px solid var(--accent-cyan);
-    }
-
-    .modal-section h4 {
-      color: var(--accent-cyan);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-    }
-
-    /* Writer's Scratchpad Drawer */
-    .drawer {
-      position: fixed;
-      top: 0;
-      right: -420px;
-      width: 100%;
-      max-width: 400px;
-      height: 100%;
-      background-color: var(--panel-bg);
-      border-left: 2px solid var(--accent-cyan);
-      box-shadow: -5px 0 25px rgba(0,0,0,0.5);
-      transition: right 0.3s ease;
-      z-index: 200;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .drawer.open {
-      right: 0;
-    }
-
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.8rem;
-    }
-
-    .drawer-header h3 {
-      color: var(--accent-cyan);
-    }
-
-    textarea {
-      width: 100%;
-      height: 100%;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 0.95rem;
-      resize: none;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: var(--accent-cyan);
-    }
-  </style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8;
+            border-radius: 3px;
+        }
+    </style>
 </head>
-<body>
+<body class="text-slate-800 min-h-screen flex flex-col relative pb-16">
 
-  <header>
-    <div class="title-group">
-      <h1>Kivotos Student Reference</h1>
-      <p>Blue Archive Character Database</p>
-    </div>
-    <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search name or club...">
-      <select id="schoolFilter">
-        <option value="ALL">All Schools</option>
-        <option value="Abydos">Abydos</option>
-        <option value="Gehenna">Gehenna</option>
-        <option value="Trinity">Trinity</option>
-        <option value="Millennium">Millennium</option>
-        <option value="Arius">Arius</option>
-      </select>
-      <button class="btn" id="notesBtn">Scratchpad</button>
-    </div>
-  </header>
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-30 glass-panel border-b border-schale-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-ba-blue to-cyan-300 flex items-center justify-center text-white shadow-md halo-glow">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-tech font-bold text-xl tracking-wider text-slate-800 uppercase flex items-center gap-2">
+                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v2.5 Reference</span>
+                    </h1>
+                    <p class="text-xs text-slate-500">Kivotos Student & Tactical Archive</p>
+                </div>
+            </div>
 
-  <div class="container" id="studentContainer"></div>
-
-  <!-- Modal Pop-up -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-      <button class="close-btn" id="closeBtn">&times;</button>
-      <div class="modal-header">
-        <img id="modalImg" src="" alt="" class="modal-avatar">
-        <div class="modal-info">
-          <h2 id="modalName"></h2>
-          <p id="modalSchool"></p>
+            <!-- Header Actions -->
+            <div class="flex items-center space-x-3">
+                <button id="toggleDrawerBtn" class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-schale-500 hover:bg-schale-600 text-white font-medium text-sm transition-all shadow-md halo-glow">
+                    <i data-lucide="notebook-pen" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Fanfic & Notes Scratchpad</span>
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-section">
-          <h4>Weapon & Role</h4>
-          <p id="modalCombat"></p>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-grow w-full">
+        
+        <!-- Controls & Filters Section -->
+        <section class="mb-8 space-y-4">
+            <!-- Search Bar & Statistics -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <!-- Search Input -->
+                <div class="relative w-full md:w-96">
+                    <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search by student name, school, club, or weapon..." 
+                        class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white/90 focus:bg-white focus:outline-none focus:ring-2 focus:ring-schale-400 focus:border-transparent text-sm transition-all shadow-sm">
+                </div>
+
+                <!-- Active Count Badge -->
+                <div class="text-xs font-medium text-slate-500 flex items-center gap-2 bg-white/80 px-3 py-1.5 rounded-lg border border-slate-200">
+                    <span>Showing:</span>
+                    <span id="characterCount" class="font-bold text-schale-600">0</span>
+                    <span>Students</span>
+                </div>
+            </div>
+
+            <!-- Academy Category Filters -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm" id="academyFilters">
+                <!-- Filter buttons rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- Student Cards Grid -->
+        <section id="characterGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <!-- Cards populated via JS -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white/50 rounded-2xl border border-dashed border-slate-300">
+            <i data-lucide="user-x" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
+            <h3 class="font-bold text-slate-700">No Students Found</h3>
+            <p class="text-xs text-slate-500 mt-1">Try adjusting your search criteria or school filters.</p>
         </div>
-        <div class="modal-section">
-          <h4>Personality & Traits</h4>
-          <p id="modalLore"></p>
+    </main>
+
+    <!-- Character Details Modal -->
+    <div id="charModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-200 opacity-0">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-100 flex flex-col relative transform scale-95 transition-transform duration-200" id="modalContainer">
+            <!-- Modal Header with Portrait -->
+            <div class="relative bg-gradient-to-r from-schale-900 via-slate-800 to-schale-900 text-white p-6 pb-8 flex items-center gap-5">
+                <button id="closeModalBtn" class="absolute top-4 right-4 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="w-20 h-20 rounded-full border-2 border-schale-400 overflow-hidden bg-slate-900 flex-shrink-0 shadow-md">
+                    <img id="modalImg" src="" alt="" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/80/0f172a/38bdf8?text=Halo'">
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <span id="modalAcademyBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-schale-400/20 border border-schale-300/30 text-schale-200">
+                            Academy
+                        </span>
+                        <span id="modalClub" class="text-xs text-slate-300">Club</span>
+                    </div>
+                    <h2 id="modalName" class="font-tech text-2xl sm:text-3xl font-bold tracking-wide text-white">Student Name</h2>
+                    <p id="modalTitle" class="text-xs text-schale-200 mt-0.5">Title / Designation</p>
+                </div>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 overflow-y-auto space-y-5 text-sm">
+                <!-- Tactical Overview Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Position</span>
+                        <span id="modalRole" class="font-semibold text-slate-700">Role</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Weapon</span>
+                        <span id="modalWeapon" class="font-semibold text-slate-700">Weapon</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Attack Type</span>
+                        <span id="modalAttack" class="font-semibold text-slate-700">Type</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Defense</span>
+                        <span id="modalDefense" class="font-semibold text-slate-700">Type</span>
+                    </div>
+                </div>
+
+                <!-- Lore & Personality Section (Fanfic Reference) -->
+                <div>
+                    <h4 class="font-tech text-base font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4 text-schale-500"></i> Personality & Story Role
+                    </h4>
+                    <p id="modalLore" class="text-slate-600 leading-relaxed bg-slate-50/50 p-4 rounded-xl border border-slate-100">
+                        Lore summary will appear here...
+                    </p>
+                </div>
+
+                <!-- Writing Notes / Character Quirks -->
+                <div>
+                    <h4 class="font-tech text-base font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Character Quirks & Dialogue Style
+                    </h4>
+                    <ul id="modalQuirks" class="list-disc list-inside space-y-1 text-slate-600 text-xs sm:text-sm pl-1">
+                        <!-- Quirks inserted dynamically -->
+                    </ul>
+                </div>
+
+                <!-- Tags -->
+                <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">Metadata Tags</span>
+                    <div id="modalTags" class="flex flex-wrap gap-1.5">
+                        <!-- Tags inserted dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer Action -->
+            <div class="bg-slate-50 p-4 border-t border-slate-100 flex justify-end">
+                <button id="copyProfileBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium flex items-center gap-2 transition-all">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Summary to Notes
+                </button>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Side Notes Drawer -->
-  <div class="drawer" id="notesDrawer">
-    <div class="drawer-header">
-      <h3>Writer's Scratchpad</h3>
-      <button class="close-btn" id="closeDrawerBtn" style="position: static;">&times;</button>
+    <!-- Side Drawer: Custom Notes & Fanfic Writer's Pad -->
+    <div id="notesDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
+        <!-- Drawer Header -->
+        <div class="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="pen-tool" class="w-4 h-4 text-schale-400"></i>
+                <h3 class="font-tech font-bold text-lg tracking-wider">Fanfic & Character Scratchpad</h3>
+            </div>
+            <button id="closeDrawerBtn" class="p-1 rounded text-slate-400 hover:text-white transition-all">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Body -->
+        <div class="p-4 flex-grow flex flex-col space-y-3 bg-slate-50">
+            <p class="text-xs text-slate-500">
+                Use this pad to outline scenes, paste student summaries, or draft dialogue. Saved automatically to your browser!
+            </p>
+
+            <textarea id="scratchpadText" class="w-full flex-grow p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-schale-400 text-sm font-sans resize-none leading-relaxed shadow-inner" placeholder="Type scene drafts or student pairings here..."></textarea>
+
+            <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
+                <span id="saveStatus">Auto-saved to local memory</span>
+                <button id="clearNotesBtn" class="text-red-500 hover:text-red-700 underline">Clear Scratchpad</button>
+            </div>
+        </div>
     </div>
-    <textarea id="scratchpad" placeholder="Draft your fanfic scenes, character notes, or dialogue concepts here... (Auto-saves automatically!)"></textarea>
-  </div>
 
-  <script>
-    // Character database array using direct web image URLs
-    const students = [
-      {
-        id: "shiroko",
-        name: "Sunaookami Shiroko",
-        school: "Abydos High School",
-        club: "Foreclosure Task Force",
-        weapon: "Assault Rifle (WHITE FANG 465)",
-        role: "Attacker / Front",
-        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10000.png",
-        lore: "Quiet, athletic, and fiercely loyal to Abydos. Has a surprising obsession with tactical planning and robbing banks for school debt resolution."
-      },
-      {
-        id: "hina",
-        name: "Sorasaki Hina",
-        school: "Gehenna Academy",
-        club: "Prefect Team",
-        weapon: "Machine Gun (End: Innovator)",
-        role: "Attacker / Back",
-        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10002.png",
-        lore: "Head of the Gehenna Prefect Team. Exhausted by constant bureaucracy and chaos, but remains exceptionally capable and resolute in combat."
-      },
-      {
-        id: "mika",
-        name: "Misono Mika",
-        school: "Trinity General School",
-        club: "Tea Party",
-        weapon: "Submachine Gun (Quinquaginta)",
-        role: "Attacker / Front",
-        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10060.png",
-        lore: "Former Tea Party governor with immense physical strength and tragic narrative depth. Emotional, impulsive, but deeply protective."
-      },
-      {
-        id: "yuuka",
-        name: "Hayase Yuuka",
-        school: "Millennium Science School",
-        club: "Seminar",
-        weapon: "Dual SMGs (Logic & Reason)",
-        role: "Tank / Front",
-        image: "https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10001.png",
-        lore: "Treasurer of Seminar. Direct, mathematical, and strict with budgets, but cares deeply for Sensei and Millennium's students."
-      }
-    ];
+    <!-- Application Script -->
+    <script>
+        // Character Database Array with direct asset image URLs
+        const characters = [
+            {
+                id: 'shiroko',
+                name: 'Sunaookami Shiroko',
+                academy: 'Abydos',
+                club: 'Foreclosure Task Force',
+                role: 'Striker / Attacker',
+                weapon: 'AR (SIG 556)',
+                attackType: 'Explosive',
+                defenseType: 'Light',
+                title: 'The Taciturn Bank Robber Enthusiast',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10000.png',
+                lore: 'A quiet, athletic student of Abydos High School who loves cycling and physical exercise. Beneath her stoic exterior, she possesses an oddly reckless side and a surprising knack for planning bank robberies whenever financial trouble strikes.',
+                quirks: [
+                    'Very quiet and concise in speech; rarely wastes words.',
+                    'Extremely pragmatic—will suggest extreme solutions (like robbing banks) with a straight face.',
+                    'Deeply loyal to Abydos, Sensei, and her fellow committee members.'
+                ],
+                tags: ['Abydos', 'Striker', 'AR', 'Explosive', 'Athletic']
+            },
+            {
+                id: 'hoshino',
+                name: 'Takanashi Hoshino',
+                academy: 'Abydos',
+                club: 'Foreclosure Task Force',
+                role: 'Striker / Tank',
+                weapon: 'SG (Shotgun)',
+                attackType: 'Piercing',
+                defenseType: 'Heavy',
+                title: 'President of the Foreclosure Task Force',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10008.png',
+                lore: 'A 3rd-year student who often talks like an old man and loves taking naps. Though she presents herself as lazy and reliable-for-nothing, she carries a tragic past and is one of Kivotos’ most formidable combatants when forced to protect her friends.',
+                quirks: [
+                    'Refers to herself as "oji-san" (old guy).',
+                    'Constantly looking for places to sleep or rest.',
+                    'Fiercely protective; drops her lazy persona instantly when her junior students are threatened.'
+                ],
+                tags: ['Abydos', 'Tank', 'Shotgun', 'Piercing', 'Senior']
+            },
+            {
+                id: 'aru',
+                name: 'Rikuhachima Aru',
+                academy: 'Gehenna',
+                club: 'Problem Solver 68',
+                role: 'Striker / Attacker',
+                weapon: 'SR (Sniper Rifle)',
+                attackType: 'Explosive',
+                defenseType: 'Light',
+                title: 'Self-Proclaimed Outlaw Boss',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10020.png',
+                lore: 'President of Problem Solver 68, an illegal mercenary group. Aru desperately wants to be viewed as a ruthless, hardboiled villain, but her innate kindness and frequent miscalculations always lead her into chaotic, comical failures.',
+                quirks: [
+                    'Tries hard to sound cool and sinister, but panics easily when plans derail.',
+                    'Gets embarrassed whenever her good deeds are exposed.',
+                    'Expression frequently breaks into legendary panicked faces.'
+                ],
+                tags: ['Gehenna', 'Sniper', 'Explosive', 'Problem Solver 68']
+            },
+            {
+                id: 'hina',
+                name: 'Sorasaki Hina',
+                academy: 'Gehenna',
+                club: 'Prefect Team',
+                role: 'Striker / Attacker',
+                weapon: 'MG (Machine Gun)',
+                attackType: 'Explosive',
+                defenseType: 'Heavy',
+                title: 'Head of the Gehenna Prefect Team',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10002.png',
+                lore: 'The fearsome and overworked President of the Disciplinary Committee. Though revered and feared across Kivotos for her overwhelming combat strength, she is privately exhausted and craves rest and praise from Sensei.',
+                quirks: [
+                    'Exhausted from constantly breaking up Gehenna chaos.',
+                    'Professional and strict on duty, but shows a vulnerable, sweet side around Sensei.',
+                    'Carries a heavy machine gun with effortless grace.'
+                ],
+                tags: ['Gehenna', 'Prefect Team', 'Machine Gun', 'Explosive']
+            },
+            {
+                id: 'mika',
+                name: 'Misono Mika',
+                academy: 'Trinity',
+                club: 'Tea Party',
+                role: 'Striker / Attacker',
+                weapon: 'SMG (Submachine Gun)',
+                attackType: 'Piercing',
+                defenseType: 'Heavy',
+                title: 'Former Tea Party Patron',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10060.png',
+                lore: 'A former leader of Trinity’s student council. Behind her innocent, princess-like demeanor and pink aesthetic lies immense physical strength and complex emotional trauma tied to the conflict between Trinity and Arius.',
+                quirks: [
+                    'Uses cute speech quirks ("Wahaha", "Sensei!").',
+                    'Possesses superhuman physical durability despite her delicate appearance.',
+                    'Struggles with self-loathing and complex guilt, seeking redemption.'
+                ],
+                tags: ['Trinity', 'Tea Party', 'Piercing', 'SMG', 'Mystic']
+            },
+            {
+                id: 'nagisa',
+                name: 'Kirifuji Nagisa',
+                academy: 'Trinity',
+                club: 'Tea Party',
+                role: 'Special / Support',
+                weapon: 'HG (Handgun)',
+                attackType: 'Explosive',
+                defenseType: 'Heavy',
+                title: 'Host of the Tea Party',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10059.png',
+                lore: 'Current acting head of Trinity General School. She is elegant, cultured, and loves black tea and cake rolls, but her deep paranoia regarding political traitors led her into extreme decisions during the Eden Treaty crisis.',
+                quirks: [
+                    'Obsessed with black tea and serving roll cakes.',
+                    'Calls in literal artillery bombardments while sitting calmly at her desk.',
+                    'Prone to severe stress and overthinking when managing Trinity politics.'
+                ],
+                tags: ['Trinity', 'Tea Party', 'Support', 'Explosive']
+            },
+            {
+                id: 'yuuka',
+                name: 'Hayase Yuuka',
+                academy: 'Millennium',
+                club: 'Seminar',
+                role: 'Striker / Tank',
+                weapon: 'SMG (Dual Submachine Guns)',
+                attackType: 'Explosive',
+                defenseType: 'Heavy',
+                title: 'Treasurer of Seminar',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10001.png',
+                lore: 'The logical and hardworking treasurer of Millennium Science School. She manages the school\'s budget with an iron fist, constantly scolding Sensei and other clubs for careless spending, yet deeply cares for everyone.',
+                quirks: [
+                    'Calculates statistics and budgets mentally in seconds.',
+                    'Acts tsundere when scolding Sensei about financial receipts.',
+                    'Teased frequently about her heavy weight/calculator jokes by peers.'
+                ],
+                tags: ['Millennium', 'Seminar', 'Tank', 'SMG', 'Explosive']
+            },
+            {
+                id: 'alice',
+                name: 'Tendou Alice (Aris)',
+                academy: 'Millennium',
+                club: 'Game Development Department',
+                role: 'Striker / Attacker',
+                weapon: 'RG (Railgun)',
+                attackType: 'Mystic',
+                defenseType: 'Special',
+                title: 'The Gaming Android Daughter',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10047.png',
+                lore: 'A mysterious robot discovered in ancient ruins who learned human speech and emotion entirely through retro retro RPG video games. She wields a massive battleship railgun like a hero from an adventure quest.',
+                quirks: [
+                    'Speaks in retro video game terminology ("Alice has leveled up!", "Quest accepted!").',
+                    'Refers to herself in the third person as "Alice".',
+                    'Pure, innocent, and enthusiastic about gaming with her friends.'
+                ],
+                tags: ['Millennium', 'GameDev', 'Railgun', 'Mystic', 'Android']
+            },
+            {
+                id: 'saori',
+                name: 'Joumae Saori',
+                academy: 'Arius',
+                club: 'Arius Squad',
+                role: 'Striker / Attacker',
+                weapon: 'AR (Assault Rifle)',
+                attackType: 'Explosive',
+                defenseType: 'Special',
+                title: 'Leader of Arius Squad',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10048.png',
+                lore: 'A battle-hardened student raised in the bleak, abusive environment of the Arius Branch School. Formerly driven by hatred, she learned to look past her indoctrination and now works independently to protect her squad mates.',
+                quirks: [
+                    'Serious, stoic, and highly vigilant in military tactics.',
+                    'Unfamiliar with normal teenage activities or civilian culture.',
+                    'Deeply repentant for past actions and devoted to protecting squad members.'
+                ],
+                tags: ['Arius', 'Arius Squad', 'AR', 'Explosive', 'Striker']
+            },
+            {
+                id: 'miyako',
+                name: 'Tsukatsuki Miyako',
+                academy: 'SRT',
+                club: 'RABBIT Squad',
+                role: 'Striker / Tank',
+                weapon: 'SMG (Submachine Gun)',
+                attackType: 'Piercing',
+                defenseType: 'Heavy',
+                title: 'Captain of RABBIT 1',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10065.png',
+                lore: 'The disciplined captain of SRT Special Academy’s RABBIT Squad. After SRT was abruptly closed, she and her team camped out in a public park to protest, maintaining strict military etiquette under hard living conditions.',
+                quirks: [
+                    'Maintains rigid military discipline even while living in a park tent.',
+                    'Initially cold toward adults, but develops deep trust in Sensei.',
+                    'Loves eating canned rations and bentos.'
+                ],
+                tags: ['SRT', 'RABBIT Squad', 'Tank', 'SMG', 'Piercing']
+            },
+            {
+                id: 'kanna',
+                name: 'Ogata Kanna',
+                academy: 'Valkyrie',
+                club: 'Public Security Bureau',
+                role: 'Special / Attacker',
+                weapon: 'HG (Handgun)',
+                attackType: 'Piercing',
+                defenseType: 'Heavy',
+                title: 'Chief of the Public Security Bureau',
+                image: 'https://raw.githubusercontent.com/AronaBot/BlueArchive-Assets/main/images/student/icon/10072.png',
+                lore: 'Known as the "Mad Dog of Valkyrie", Kanna is the overworked Chief of Police in Kivotos. While cynical about administrative politics, she possesses a strong sense of core justice when citizens are endangered.',
+                quirks: [
+                    'Constantly tired, drinking black coffee, and dealing with paperwork.',
+                    'Grff, rough-around-the-edges persona with a golden heart.',
+                    'Known for intense pursuit methods during police investigations.'
+                ],
+                tags: ['Valkyrie', 'Police', 'Handgun', 'Piercing']
+            }
+        ];
 
-    const container = document.getElementById('studentContainer');
-    const searchInput = document.getElementById('searchInput');
-    const schoolFilter = document.getElementById('schoolFilter');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const closeBtn = document.getElementById('closeBtn');
+        // Academies List for Filter Buttons
+        const academies = ['All', 'Abydos', 'Gehenna', 'Trinity', 'Millennium', 'Arius', 'SRT', 'Valkyrie'];
 
-    // Scratchpad elements
-    const notesBtn = document.getElementById('notesBtn');
-    const notesDrawer = document.getElementById('notesDrawer');
-    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-    const scratchpad = document.getElementById('scratchpad');
+        // State Variables
+        let currentAcademy = 'All';
+        let searchQuery = '';
 
-    function renderStudents(list) {
-      container.innerHTML = '';
-      list.forEach(student => {
-        const card = document.createElement('div');
-        card.className = 'student-card';
-        card.innerHTML = `
-          <div class="avatar-container">
-            <img src="${student.image}" alt="${student.name}" class="student-avatar" onerror="this.src='https://via.placeholder.com/90/1e293b/38bdf8?text=Halo'">
-          </div>
-          <div class="student-name">${student.name}</div>
-          <div class="student-school">${student.school}</div>
-          <div class="badges">
-            <span class="badge">${student.club}</span>
-          </div>
-        `;
-        card.addEventListener('click', () => openModal(student));
-        container.appendChild(card);
-      });
-    }
+        // DOM Elements
+        const characterGrid = document.getElementById('characterGrid');
+        const academyFilters = document.getElementById('academyFilters');
+        const searchInput = document.getElementById('searchInput');
+        const characterCount = document.getElementById('characterCount');
+        const emptyState = document.getElementById('emptyState');
 
-    function openModal(student) {
-      document.getElementById('modalName').innerText = student.name;
-      document.getElementById('modalSchool').innerText = `${student.school} • ${student.club}`;
-      document.getElementById('modalCombat').innerText = `${student.weapon} | ${student.role}`;
-      document.getElementById('modalLore').innerText = student.lore;
-      
-      const modalImg = document.getElementById('modalImg');
-      modalImg.src = student.image;
-      modalImg.onerror = function() {
-        this.src = 'https://via.placeholder.com/100/1e293b/38bdf8?text=Halo';
-      };
+        // Modal Elements
+        const charModal = document.getElementById('charModal');
+        const modalContainer = document.getElementById('modalContainer');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalImg = document.getElementById('modalImg');
+        const modalName = document.getElementById('modalName');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAcademyBadge = document.getElementById('modalAcademyBadge');
+        const modalClub = document.getElementById('modalClub');
+        const modalRole = document.getElementById('modalRole');
+        const modalWeapon = document.getElementById('modalWeapon');
+        const modalAttack = document.getElementById('modalAttack');
+        const modalDefense = document.getElementById('modalDefense');
+        const modalLore = document.getElementById('modalLore');
+        const modalQuirks = document.getElementById('modalQuirks');
+        const modalTags = document.getElementById('modalTags');
+        const copyProfileBtn = document.getElementById('copyProfileBtn');
 
-      modalOverlay.style.display = 'flex';
-    }
+        // Notes Drawer Elements
+        const toggleDrawerBtn = document.getElementById('toggleDrawerBtn');
+        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+        const notesDrawer = document.getElementById('notesDrawer');
+        const scratchpadText = document.getElementById('scratchpadText');
+        const saveStatus = document.getElementById('saveStatus');
+        const clearNotesBtn = document.getElementById('clearNotesBtn');
 
-    closeBtn.addEventListener('click', () => {
-      modalOverlay.style.display = 'none';
-    });
+        let activeStudentForCopy = null;
 
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) modalOverlay.style.display = 'none';
-    });
+        // Initialize App
+        function init() {
+            renderAcademyFilters();
+            renderCharacters();
+            setupEventListeners();
+            loadScratchpad();
+            lucide.createIcons();
+        }
 
-    // Scratchpad drawer listeners
-    notesBtn.addEventListener('click', () => notesDrawer.classList.add('open'));
-    closeDrawerBtn.addEventListener('click', () => notesDrawer.classList.remove('open'));
+        // Render Academy Filter Buttons
+        function renderAcademyFilters() {
+            academyFilters.innerHTML = academies.map(acad => `
+                <button 
+                    onclick="setAcademyFilter('${acad}')"
+                    class="px-3.5 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all text-xs sm:text-sm ${
+                        currentAcademy === acad 
+                        ? 'bg-schale-500 text-white shadow-md halo-glow' 
+                        : 'bg-white/80 text-slate-600 hover:bg-white border border-slate-200'
+                    }">
+                    ${acad}
+                </button>
+            `).join('');
+        }
 
-    // Persistent storage for scratchpad
-    scratchpad.value = localStorage.getItem('ba_writer_notes') || '';
-    scratchpad.addEventListener('input', () => {
-      localStorage.setItem('ba_writer_notes', scratchpad.value);
-    });
+        // Filter Action
+        window.setAcademyFilter = function(acad) {
+            currentAcademy = acad;
+            renderAcademyFilters();
+            renderCharacters();
+        };
 
-    function filterData() {
-      const query = searchInput.value.toLowerCase();
-      const school = schoolFilter.value;
+        // Render Cards
+        function renderCharacters() {
+            const filtered = characters.filter(char => {
+                const matchesAcademy = currentAcademy === 'All' || char.academy === currentAcademy;
+                const matchesSearch = searchQuery === '' || 
+                    char.name.toLowerCase().includes(searchQuery) ||
+                    char.academy.toLowerCase().includes(searchQuery) ||
+                    char.club.toLowerCase().includes(searchQuery) ||
+                    char.weapon.toLowerCase().includes(searchQuery) ||
+                    char.role.toLowerCase().includes(searchQuery);
 
-      const filtered = students.filter(s => {
-        const matchesSearch = s.name.toLowerCase().includes(query) || s.club.toLowerCase().includes(query);
-        const matchesSchool = school === 'ALL' || s.school.includes(school);
-        return matchesSearch && matchesSchool;
-      });
+                return matchesAcademy && matchesSearch;
+            });
 
-      renderStudents(filtered);
-    }
+            characterCount.textContent = filtered.length;
 
-    searchInput.addEventListener('input', filterData);
-    schoolFilter.addEventListener('change', filterData);
+            if (filtered.length === 0) {
+                characterGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
 
-    // Initial Render
-    renderStudents(students);
-  </script>
+            emptyState.classList.add('hidden');
+
+            characterGrid.innerHTML = filtered.map(char => `
+                <div onclick="openModal('${char.id}')" 
+                     class="glass-panel bg-white/90 rounded-2xl p-5 border border-slate-100 shadow-sm halo-glow-hover transition-all duration-200 cursor-pointer flex flex-col justify-between group">
+                    <div>
+                        <!-- Card Top Badge & Avatar -->
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-schale-50 text-schale-600 border border-schale-200">
+                                ${char.academy}
+                            </span>
+                            <div class="w-14 h-14 rounded-full border-2 border-schale-400 overflow-hidden bg-slate-900 shadow-sm group-hover:scale-105 transition-transform">
+                                <img src="${char.image}" alt="${char.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/60/0f172a/38bdf8?text=Halo'">
+                            </div>
+                        </div>
+
+                        <!-- Student Name -->
+                        <h3 class="font-tech text-xl font-bold text-slate-800 group-hover:text-schale-500 transition-colors">
+                            ${char.name}
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4 line-clamp-1">${char.title}</p>
+
+                        <!-- Details Grid -->
+                        <div class="grid grid-cols-2 gap-2 text-xs mb-4 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                            <div>
+                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Role</span>
+                                <span class="font-medium text-slate-700">${char.role}</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Weapon</span>
+                                <span class="font-medium text-slate-700">${char.weapon}</span>
+                            </div>
+                        </div>
+
+                        <!-- Snippet -->
+                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                            ${char.lore}
+                        </p>
+                    </div>
+
+                    <!-- Footer Tags -->
+                    <div class="flex flex-wrap gap-1 pt-2 border-t border-slate-100">
+                        ${char.tags.slice(0, 3).map(tag => `
+                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded">#${tag}</span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // Modal Functions
+        window.openModal = function(id) {
+            const char = characters.find(c => c.id === id);
+            if (!char) return;
+
+            activeStudentForCopy = char;
+
+            modalImg.src = char.image;
+            modalName.textContent = char.name;
+            modalTitle.textContent = char.title;
+            modalAcademyBadge.textContent = char.academy + ' Academy';
+            modalClub.textContent = '• ' + char.club;
+            modalRole.textContent = char.role;
+            modalWeapon.textContent = char.weapon;
+            modalAttack.textContent = char.attackType;
+            modalDefense.textContent = char.defenseType;
+            modalLore.textContent = char.lore;
+
+            modalQuirks.innerHTML = char.quirks.map(q => `
+                <li class="flex items-start gap-2">
+                    <span class="text-schale-400 text-base leading-none">•</span>
+                    <span>${q}</span>
+                </li>
+            `).join('');
+
+            modalTags.innerHTML = char.tags.map(t => `
+                <span class="text-xs bg-schale-50 text-schale-600 border border-schale-200 px-2.5 py-1 rounded-lg">#${t}</span>
+            `).join('');
+
+            charModal.classList.remove('hidden');
+            setTimeout(() => {
+                charModal.classList.remove('opacity-0');
+                modalContainer.classList.remove('scale-95');
+                modalContainer.classList.add('scale-100');
+            }, 10);
+        };
+
+        function closeModal() {
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+            charModal.classList.add('opacity-0');
+            setTimeout(() => {
+                charModal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Scratchpad Auto-save
+        function loadScratchpad() {
+            const saved = localStorage.getItem('ba_fanfic_scratchpad');
+            if (saved) {
+                scratchpadText.value = saved;
+            }
+        }
+
+        function saveScratchpad() {
+            localStorage.setItem('ba_fanfic_scratchpad', scratchpadText.value);
+            saveStatus.textContent = 'Saved at ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Search Input
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase().trim();
+                renderCharacters();
+            });
+
+            // Modal Close Buttons
+            closeModalBtn.addEventListener('click', closeModal);
+            charModal.addEventListener('click', (e) => {
+                if (e.target === charModal) closeModal();
+            });
+
+            // Copy Profile to Notes
+            copyProfileBtn.addEventListener('click', () => {
+                if (!activeStudentForCopy) return;
+                const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n')}\n`;
+                
+                scratchpadText.value += formatted;
+                saveScratchpad();
+
+                // Open drawer to show copied text
+                notesDrawer.classList.remove('translate-x-full');
+
+                // Visual feedback
+                copyProfileBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-green-400"></i> Copied to Notes!`;
+                lucide.createIcons();
+                setTimeout(() => {
+                    copyProfileBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Summary to Notes`;
+                    lucide.createIcons();
+                }, 2000);
+            });
+
+            // Notes Drawer Toggle
+            toggleDrawerBtn.addEventListener('click', () => {
+                notesDrawer.classList.toggle('translate-x-full');
+            });
+            closeDrawerBtn.addEventListener('click', () => {
+                notesDrawer.classList.add('translate-x-full');
+            });
+
+            // Scratchpad Auto-save Event
+            scratchpadText.addEventListener('input', saveScratchpad);
+
+            // Clear Notes
+            clearNotesBtn.addEventListener('click', () => {
+                if (confirm('Clear your fanfic notes?')) {
+                    scratchpadText.value = '';
+                    saveScratchpad();
+                }
+            });
+        }
+
+        // Run App
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
