@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Archive Character Reference</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --panel-bg: #1e293b;
+      --card-bg: #334155;
+      --accent-cyan: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--panel-bg);
+      padding: 1.5rem 2rem;
+      border-bottom: 2px solid var(--accent-cyan);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.8rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    input, select {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .student-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .student-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Portrait Image Styling */
+    .avatar-container {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--accent-cyan);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background-color: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .student-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .student-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .student-school {
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      margin-bottom: 0.8rem;
+    }
+
+    .badges {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background-color: var(--panel-bg);
+      border: 2px solid var(--accent-cyan);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 550px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--accent-cyan);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--accent-cyan);
+      object-fit: cover;
+      background-color: var(--bg-dark);
+    }
+
+    .modal-info h2 {
+      color: var(--accent-cyan);
+      font-size: 1.5rem;
+    }
+
+    .modal-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .modal-section {
+      background-color: var(--bg-dark);
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent-cyan);
+    }
+
+    .modal-section h4 {
+      color: var(--accent-cyan);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="title-group">
+      <h1>Kivotos Student Reference</h1>
+      <p>Blue Archive Character Database</p>
+    </div>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search name or club...">
+      <select id="schoolFilter">
+        <option value="ALL">All Schools</option>
+        <option value="Abydos">Abydos</option>
+        <option value="Gehenna">Gehenna</option>
+        <option value="Trinity">Trinity</option>
+        <option value="Millennium">Millennium</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="container" id="studentContainer"></div>
+
+  <!-- Modal Pop-up -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <div class="modal-header">
+        <img id="modalImg" src="" alt="" class="modal-avatar">
+        <div class="modal-info">
+          <h2 id="modalName"></h2>
+          <p id="modalSchool"></p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>Weapon & Role</h4>
+          <p id="modalCombat"></p>
+        </div>
+        <div class="modal-section">
+          <h4>Personality & Traits</h4>
+          <p id="modalLore"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Character database array
+    // Point 'image' directly to your uploaded files inside the /images folder!
+    const students = [
+      {
+        id: "shiroko",
+        name: "Sunaookami Shiroko",
+        school: "Abydos High School",
+        club: "Foreclosure Task Force",
+        weapon: "Assault Rifle (WHITE FANG 465)",
+        role: "Attacker / Front",
+        image: "images/shiroko.png",
+        lore: "Quiet, athletic, and fiercely loyal to Abydos. Has a surprising obsession with tactical planning and robbing banks for school debt resolution."
+      },
+      {
+        id: "hina",
+        name: "Sorasaki Hina",
+        school: "Gehenna Academy",
+        club: "Prefect Team",
+        weapon: "Machine Gun (End: Innovator)",
+        role: "Attacker / Back",
+        image: "images/hina.png",
+        lore: "Head of the Gehenna Prefect Team. Exhausted by constant bureaucracy and chaos, but remains exceptionally capable and resolute in combat."
+      },
+      {
+        id: "mika",
+        name: "Misono Mika",
+        school: "Trinity General School",
+        club: "Tea Party",
+        weapon: "Submachine Gun (Quinquaginta)",
+        role: "Attacker / Front",
+        image: "images/mika.png",
+        lore: "Former Tea Party governor with immense physical strength and tragic narrative depth. Emotional, impulsive, but deeply protective."
+      },
+      {
+        id: "yuuka",
+        name: "Hayase Yuuka",
+        school: "Millennium Science School",
+        club: "Seminar",
+        weapon: "Dual SMGs (Logic & Reason)",
+        role: "Tank / Front",
+        image: "images/yuuka.png",
+        lore: "Treasurer of Seminar. Direct, mathematical, and strict with budgets, but cares deeply for Sensei and Millennium's students."
+      }
+    ];
+
+    const container = document.getElementById('studentContainer');
+    const searchInput = document.getElementById('searchInput');
+    const schoolFilter = document.getElementById('schoolFilter');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeBtn = document.getElementById('closeBtn');
+
+    function renderStudents(list) {
+      container.innerHTML = '';
+      list.forEach(student => {
+        const card = document.createElement('div');
+        card.className = 'student-card';
+        card.innerHTML = `
+          <div class="avatar-container">
+            <img src="${student.image}" alt="${student.name}" class="student-avatar" onerror="this.src='https://via.placeholder.com/100/1e293b/38bdf8?text=Halo'">
+          </div>
+          <div class="student-name">${student.name}</div>
+          <div class="student-school">${student.school}</div>
+          <div class="badges">
+            <span class="badge">${student.club}</span>
+          </div>
+        `;
+        card.addEventListener('click', () => openModal(student));
+        container.appendChild(card);
+      });
+    }
+
+    function openModal(student) {
+      document.getElementById('modalName').innerText = student.name;
+      document.getElementById('modalSchool').innerText = `${student.school} • ${student.club}`;
+      document.getElementById('modalCombat').innerText = `${student.weapon} | ${student.role}`;
+      document.getElementById('modalLore').innerText = student.lore;
+      
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = student.image;
+      modalImg.onerror = function() {
+        this.src = 'https://via.placeholder.com/100/1e293b/38bdf8?text=Halo';
+      };
+
+      modalOverlay.style.display = 'flex';
+    }
+
+    closeBtn.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+    });
+
+    function filterData() {
+      const query = searchInput.value.toLowerCase();
+      const school = schoolFilter.value;
+
+      const filtered = students.filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(query) || s.club.toLowerCase().includes(query);
+        const matchesSchool = school === 'ALL' || s.school.includes(school);
+        return matchesSearch && matchesSchool;
+      });
+
+      renderStudents(filtered);
+    }
+
+    searchInput.addEventListener('input', filterData);
+    schoolFilter.addEventListener('change', filterData);
+
+    // Initial Render
+    renderStudents(students);
+  </script>
+</body>
+</html>
