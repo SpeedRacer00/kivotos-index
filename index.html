@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts: Inter and Rajdhani for high-tech sci-fi UI feel -->
+    <!-- Google Fonts: Inter and Rajdhani -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -41,14 +41,12 @@
         }
     </script>
     <style>
-        /* Custom UI Styling for Blue Archive Halo Aesthetic */
         body {
             background: linear-gradient(135deg, #eef2f6 0%, #e0e7ff 50%, #f0f9ff 100%);
             background-attachment: fixed;
             font-family: 'Inter', sans-serif;
         }
 
-        /* Glassmorphic UI element */
         .glass-panel {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -64,7 +62,6 @@
             transform: translateY(-2px);
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -89,7 +86,7 @@
                 </div>
                 <div>
                     <h1 class="font-tech font-bold text-xl tracking-wider text-slate-800 uppercase flex items-center gap-2">
-                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v2.7 Reference</span>
+                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v2.8 CDN Fix</span>
                     </h1>
                     <p class="text-xs text-slate-500">Kivotos Student & Tactical Archive</p>
                 </div>
@@ -259,7 +256,7 @@
 
     <!-- Application Script -->
     <script>
-        // Character Database Array utilizing jsDelivr CDN links to bypass raw GitHub hotlink blocks
+        // Character Database Array using verified SchaleDB CDN Icon IDs
         const characters = [
             {
                 id: 'shiroko',
@@ -271,7 +268,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Light',
                 title: 'The Taciturn Bank Robber Enthusiast',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10000.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10000.png',
                 lore: 'A quiet, athletic student of Abydos High School who loves cycling and physical exercise. Beneath her stoic exterior, she possesses an oddly reckless side and a surprising knack for planning bank robberies whenever financial trouble strikes.',
                 quirks: [
                     'Very quiet and concise in speech; rarely wastes words.',
@@ -290,7 +287,7 @@
                 attackType: 'Piercing',
                 defenseType: 'Heavy',
                 title: 'President of the Foreclosure Task Force',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10008.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10002.png',
                 lore: 'A 3rd-year student who often talks like an old man and loves taking naps. Though she presents herself as lazy and reliable-for-nothing, she carries a tragic past and is one of Kivotos’ most formidable combatants when forced to protect her friends.',
                 quirks: [
                     'Refers to herself as "oji-san" (old guy).',
@@ -309,7 +306,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Light',
                 title: 'Self-Proclaimed Outlaw Boss',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10020.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10005.png',
                 lore: 'President of Problem Solver 68, an illegal mercenary group. Aru desperately wants to be viewed as a ruthless, hardboiled villain, but her innate kindness and frequent miscalculations always lead her into chaotic, comical failures.',
                 quirks: [
                     'Tries hard to sound cool and sinister, but panics easily when plans derail.',
@@ -328,7 +325,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Heavy',
                 title: 'Head of the Gehenna Prefect Team',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10002.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10008.png',
                 lore: 'The fearsome and overworked President of the Disciplinary Committee. Though revered and feared across Kivotos for her overwhelming combat strength, she is privately exhausted and craves rest and praise from Sensei.',
                 quirks: [
                     'Exhausted from constantly breaking up Gehenna chaos.',
@@ -347,7 +344,7 @@
                 attackType: 'Piercing',
                 defenseType: 'Heavy',
                 title: 'Former Tea Party Patron',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10060.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10058.png',
                 lore: 'A former leader of Trinity’s student council. Behind her innocent, princess-like demeanor and pink aesthetic lies immense physical strength and complex emotional trauma tied to the conflict between Trinity and Arius.',
                 quirks: [
                     'Uses cute speech quirks ("Wahaha", "Sensei!").',
@@ -366,7 +363,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Heavy',
                 title: 'Host of the Tea Party',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10059.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/20025.png',
                 lore: 'Current acting head of Trinity General School. She is elegant, cultured, and loves black tea and cake rolls, but her deep paranoia regarding political traitors led her into extreme decisions during the Eden Treaty crisis.',
                 quirks: [
                     'Obsessed with black tea and serving roll cakes.',
@@ -385,7 +382,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Heavy',
                 title: 'Treasurer of Seminar',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10001.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10001.png',
                 lore: 'The logical and hardworking treasurer of Millennium Science School. She manages the school\'s budget with an iron fist, constantly scolding Sensei and other clubs for careless spending, yet deeply cares for everyone.',
                 quirks: [
                     'Calculates statistics and budgets mentally in seconds.',
@@ -404,7 +401,7 @@
                 attackType: 'Mystic',
                 defenseType: 'Special',
                 title: 'The Gaming Android Daughter',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10047.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10015.png',
                 lore: 'A mysterious robot discovered in ancient ruins who learned human speech and emotion entirely through retro RPG video games. She wields a massive battleship railgun like a hero from an adventure quest.',
                 quirks: [
                     'Speaks in retro video game terminology ("Alice has leveled up!", "Quest accepted!").',
@@ -423,7 +420,7 @@
                 attackType: 'Explosive',
                 defenseType: 'Special',
                 title: 'Leader of Arius Squad',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10048.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10047.png',
                 lore: 'A battle-hardened student raised in the bleak, abusive environment of the Arius Branch School. Formerly driven by hatred, she learned to look past her indoctrination and now works independently to protect her squad mates.',
                 quirks: [
                     'Serious, stoic, and highly vigilant in military tactics.',
@@ -442,7 +439,7 @@
                 attackType: 'Piercing',
                 defenseType: 'Heavy',
                 title: 'Captain of RABBIT 1',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets@main/images/student/icon/10065.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/10037.png',
                 lore: 'The disciplined captain of SRT Special Academy’s RABBIT Squad. After SRT was abruptly closed, she and her team camped out in a public park to protest, maintaining strict military etiquette under hard living conditions.',
                 quirks: [
                     'Maintains rigid military discipline even while living in a park tent.',
@@ -461,7 +458,7 @@
                 attackType: 'Piercing',
                 defenseType: 'Heavy',
                 title: 'Chief of the Public Security Bureau',
-                image: 'https://cdn.jsdelivr.net/gh/AronaBot/BlueArchive-Assets/main/images/student/icon/10072.png',
+                image: 'https://raw.githubusercontent.com/lonqian/SchaleDB/main/images/student/icon/20023.png',
                 lore: 'Known as the "Mad Dog of Valkyrie", Kanna is the overworked Chief of Police in Kivotos. While cynical about administrative politics, she possesses a strong sense of core justice when citizens are endangered.',
                 quirks: [
                     'Constantly tired, drinking black coffee, and dealing with paperwork.',
@@ -472,21 +469,17 @@
             }
         ];
 
-        // Academies List for Filter Buttons
         const academies = ['All', 'Abydos', 'Gehenna', 'Trinity', 'Millennium', 'Arius', 'SRT', 'Valkyrie'];
 
-        // State Variables
         let currentAcademy = 'All';
         let searchQuery = '';
 
-        // DOM Elements
         const characterGrid = document.getElementById('characterGrid');
         const academyFilters = document.getElementById('academyFilters');
         const searchInput = document.getElementById('searchInput');
         const characterCount = document.getElementById('characterCount');
         const emptyState = document.getElementById('emptyState');
 
-        // Modal Elements
         const charModal = document.getElementById('charModal');
         const modalContainer = document.getElementById('modalContainer');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -504,7 +497,6 @@
         const modalTags = document.getElementById('modalTags');
         const copyProfileBtn = document.getElementById('copyProfileBtn');
 
-        // Notes Drawer Elements
         const toggleDrawerBtn = document.getElementById('toggleDrawerBtn');
         const closeDrawerBtn = document.getElementById('closeDrawerBtn');
         const notesDrawer = document.getElementById('notesDrawer');
@@ -514,7 +506,6 @@
 
         let activeStudentForCopy = null;
 
-        // Initialize App
         function init() {
             renderAcademyFilters();
             renderCharacters();
@@ -523,7 +514,6 @@
             lucide.createIcons();
         }
 
-        // Render Academy Filter Buttons
         function renderAcademyFilters() {
             academyFilters.innerHTML = academies.map(acad => `
                 <button 
@@ -538,14 +528,12 @@
             `).join('');
         }
 
-        // Filter Action
         window.setAcademyFilter = function(acad) {
             currentAcademy = acad;
             renderAcademyFilters();
             renderCharacters();
         };
 
-        // Render Cards
         function renderCharacters() {
             const filtered = characters.filter(char => {
                 const matchesAcademy = currentAcademy === 'All' || char.academy === currentAcademy;
@@ -619,7 +607,6 @@
             lucide.createIcons();
         }
 
-        // Modal Functions
         window.openModal = function(id) {
             const char = characters.find(c => c.id === id);
             if (!char) return;
@@ -665,7 +652,6 @@
             }, 200);
         }
 
-        // Scratchpad Auto-save
         function loadScratchpad() {
             const saved = localStorage.getItem('ba_fanfic_scratchpad');
             if (saved) {
@@ -678,21 +664,17 @@
             saveStatus.textContent = 'Saved at ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }
 
-        // Event Listeners
         function setupEventListeners() {
-            // Search Input
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase().trim();
                 renderCharacters();
             });
 
-            // Modal Close Buttons
             closeModalBtn.addEventListener('click', closeModal);
             charModal.addEventListener('click', (e) => {
                 if (e.target === charModal) closeModal();
             });
 
-            // Copy Profile to Notes
             copyProfileBtn.addEventListener('click', () => {
                 if (!activeStudentForCopy) return;
                 const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n')}\n`;
@@ -700,10 +682,8 @@
                 scratchpadText.value += formatted;
                 saveScratchpad();
 
-                // Open drawer to show copied text
                 notesDrawer.classList.remove('translate-x-full');
 
-                // Visual feedback
                 copyProfileBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-green-400"></i> Copied to Notes!`;
                 lucide.createIcons();
                 setTimeout(() => {
@@ -712,7 +692,6 @@
                 }, 2000);
             });
 
-            // Notes Drawer Toggle
             toggleDrawerBtn.addEventListener('click', () => {
                 notesDrawer.classList.toggle('translate-x-full');
             });
@@ -720,10 +699,8 @@
                 notesDrawer.classList.add('translate-x-full');
             });
 
-            // Scratchpad Auto-save Event
             scratchpadText.addEventListener('input', saveScratchpad);
 
-            // Clear Notes
             clearNotesBtn.addEventListener('click', () => {
                 if (confirm('Clear your fanfic notes?')) {
                     scratchpadText.value = '';
@@ -732,7 +709,6 @@
             });
         }
 
-        // Run App
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
