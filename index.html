@@ -86,7 +86,7 @@
                 </div>
                 <div>
                     <h1 class="font-tech font-bold text-xl tracking-wider text-slate-800 uppercase flex items-center gap-2">
-                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v3.3 Halo & Dossier</span>
+                        Schale Database <span class="text-xs font-sans px-2 py-0.5 rounded bg-schale-100 text-schale-600 border border-schale-200">v3.4 Collapsible Banners</span>
                     </h1>
                     <p class="text-xs text-slate-500">Kivotos Student & Tactical Archive</p>
                 </div>
@@ -130,9 +130,9 @@
             </div>
         </section>
 
-        <!-- Student Cards Grid -->
-        <section id="characterGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            <!-- Cards populated via JS -->
+        <!-- Student Cards Container (Grouped by Collapsible Banners) -->
+        <section id="characterGrid" class="space-y-6">
+            <!-- School Banners & Student Cards populated via JS -->
         </section>
 
         <!-- Empty State -->
@@ -274,7 +274,22 @@
 
     <!-- Application Script -->
     <script>
-        // Character Database Array with local WebP portrait and halo paths
+        // Academy Banners Config
+        const academyData = [
+            { id: 'GSC', name: 'General Student Council', banner: 'images/gsc_banner.webp' },
+            { id: 'Abydos', name: 'Abydos High School', banner: 'images/abydos_banner.webp' },
+            { id: 'Gehenna', name: 'Gehenna Academy', banner: 'images/gehenna_banner.webp' },
+            { id: 'Trinity', name: 'Trinity General School', banner: 'images/trinity_banner.webp' },
+            { id: 'Millennium', name: 'Millennium Science School', banner: 'images/millennium_banner.webp' },
+            { id: 'Arius', name: 'Arius Branch School', banner: 'images/arius_banner.webp' },
+            { id: 'SRT', name: 'SRT Special Academy', banner: 'images/srt_banner.webp' },
+            { id: 'Valkyrie', name: 'Valkyrie Police Academy', banner: 'images/valkyrie_banner.webp' }
+        ];
+
+        // Track open school dropdowns (default: Abydos, Gehenna, Millennium expanded)
+        let openAcademies = new Set(['Abydos', 'Gehenna', 'Millennium']);
+
+        // Character Database Array
         const characters = [
             {
                 id: 'shiroko',
@@ -387,7 +402,6 @@
                 defenseType: 'Heavy',
                 title: 'Host of the Tea Party',
                 image: 'images/nagisa.png',
-                halo: '',
                 lore: 'Current acting head of Trinity General School. She is elegant, cultured, and loves black tea and cake rolls, but her deep paranoia regarding political traitors led her into extreme decisions during the Eden Treaty crisis.',
                 quirks: [
                     'Obsessed with black tea and serving roll cakes.',
@@ -564,79 +578,145 @@
             renderCharacters();
         };
 
-        function renderCharacters() {
-            const filtered = characters.filter(char => {
-                const matchesAcademy = currentAcademy === 'All' || char.academy === currentAcademy;
-                const matchesSearch = searchQuery === '' || 
-                    char.name.toLowerCase().includes(searchQuery) ||
-                    char.academy.toLowerCase().includes(searchQuery) ||
-                    char.club.toLowerCase().includes(searchQuery) ||
-                    char.weapon.toLowerCase().includes(searchQuery) ||
-                    char.role.toLowerCase().includes(searchQuery);
+        window.toggleAcademy = function(academyId) {
+            if (openAcademies.has(academyId)) {
+                openAcademies.delete(academyId);
+            } else {
+                openAcademies.add(academyId);
+            }
+            renderCharacters();
+        };
 
-                return matchesAcademy && matchesSearch;
+        function renderCharacters() {
+            characterGrid.innerHTML = '';
+            let totalCount = 0;
+
+            academyData.forEach(academy => {
+                // Check if school passes top filter
+                const passesTopFilter = currentAcademy === 'All' || 
+                                        academy.name.toLowerCase().includes(currentAcademy.toLowerCase()) || 
+                                        academy.id.toLowerCase() === currentAcademy.toLowerCase();
+
+                if (!passesTopFilter) return;
+
+                // Find students belonging to this school
+                const schoolStudents = characters.filter(char => {
+                    const belongsToSchool = char.academy.toLowerCase().includes(academy.id.toLowerCase()) || 
+                                            char.academy.toLowerCase().includes(academy.name.toLowerCase());
+                    
+                    const matchesSearch = searchQuery === '' || 
+                        char.name.toLowerCase().includes(searchQuery) ||
+                        char.club.toLowerCase().includes(searchQuery) ||
+                        char.weapon.toLowerCase().includes(searchQuery) ||
+                        char.role.toLowerCase().includes(searchQuery);
+
+                    return belongsToSchool && matchesSearch;
+                });
+
+                // Skip showing empty school sections during active search
+                if (searchQuery !== '' && schoolStudents.length === 0) return;
+
+                totalCount += schoolStudents.length;
+                const isOpen = openAcademies.has(academy.id);
+
+                // Build School Section HTML
+                const sectionHtml = `
+                    <div class="mb-6 transition-all duration-300">
+                        <!-- Clickable School Banner Header -->
+                        <div onclick="toggleAcademy('${academy.id}')" 
+                             class="cursor-pointer group flex items-center justify-between p-3.5 rounded-2xl bg-white/80 hover:bg-white border border-slate-200/90 shadow-sm transition-all halo-glow-hover">
+                            <div class="flex items-center gap-4">
+                                <!-- Banner / Logo image -->
+                                <div class="w-28 sm:w-36 h-16 sm:h-20 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 flex items-center justify-center p-1.5 flex-shrink-0">
+                                    <img src="${academy.banner}" alt="${academy.name}" class="w-full h-full object-contain group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/150x80/0f172a/38bdf8?text=${academy.id}'">
+                                </div>
+                                <div>
+                                    <h2 class="font-tech text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2 sm:gap-3">
+                                        ${academy.name}
+                                        <span class="text-xs font-sans font-medium px-2.5 py-0.5 rounded-full bg-schale-100 text-schale-600 border border-schale-200">
+                                            ${schoolStudents.length}
+                                        </span>
+                                    </h2>
+                                    <p class="text-xs text-slate-400 mt-0.5">Click to ${isOpen ? 'collapse' : 'expand'} student roster</p>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Arrow Icon -->
+                            <div class="p-2 rounded-full bg-slate-100 group-hover:bg-schale-100 text-slate-500 group-hover:text-schale-600 transition-colors mr-1">
+                                <i data-lucide="${isOpen ? 'chevron-up' : 'chevron-down'}" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Student Cards Grid -->
+                        <div class="${isOpen ? 'grid mt-4' : 'hidden'} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-all duration-300">
+                            ${schoolStudents.length === 0 ? `
+                                <div class="col-span-full py-6 text-center text-xs text-slate-400 bg-white/40 rounded-xl border border-dashed border-slate-200">
+                                    No students cataloged under this school yet.
+                                </div>
+                            ` : schoolStudents.map(char => `
+                                <div onclick="openModal('${char.id}')" 
+                                     class="glass-panel bg-white/90 rounded-2xl p-5 border border-slate-100 shadow-sm halo-glow-hover transition-all duration-200 cursor-pointer flex flex-col justify-between group">
+                                    <div>
+                                        <!-- Card Top Badge & Halo Circle -->
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-schale-50 text-schale-600 border border-schale-200">
+                                                ${char.academy}
+                                            </span>
+                                            <div class="w-12 h-12 rounded-full border-2 border-schale-400 bg-slate-900 shadow-sm group-hover:scale-110 transition-transform flex items-center justify-center p-2 halo-glow">
+                                                ${char.halo ? `
+                                                    <img src="${char.halo}" alt="${char.name} Halo" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(77,238,234,0.6)]">
+                                                ` : `
+                                                    <i data-lucide="sparkles" class="w-5 h-5 text-schale-400"></i>
+                                                `}
+                                            </div>
+                                        </div>
+
+                                        <!-- Student Name -->
+                                        <h3 class="font-tech text-xl font-bold text-slate-800 group-hover:text-schale-500 transition-colors">
+                                            ${char.name}
+                                        </h3>
+                                        <p class="text-xs text-slate-500 mb-4 line-clamp-1">${char.title}</p>
+
+                                        <!-- Details Grid -->
+                                        <div class="grid grid-cols-2 gap-2 text-xs mb-4 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                            <div>
+                                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Role</span>
+                                                <span class="font-medium text-slate-700">${char.role}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Weapon</span>
+                                                <span class="font-medium text-slate-700">${char.weapon}</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Snippet -->
+                                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                                            ${char.lore}
+                                        </p>
+                                    </div>
+
+                                    <!-- Footer Tags -->
+                                    <div class="flex flex-wrap gap-1 pt-2 border-t border-slate-100">
+                                        ${char.tags.slice(0, 3).map(tag => `
+                                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded">#${tag}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                characterGrid.innerHTML += sectionHtml;
             });
 
-            characterCount.textContent = filtered.length;
+            characterCount.textContent = totalCount;
 
-            if (filtered.length === 0) {
-                characterGrid.innerHTML = '';
+            if (totalCount === 0) {
                 emptyState.classList.remove('hidden');
-                return;
+            } else {
+                emptyState.classList.add('hidden');
             }
-
-            emptyState.classList.add('hidden');
-
-            characterGrid.innerHTML = filtered.map(char => `
-                <div onclick="openModal('${char.id}')" 
-                     class="glass-panel bg-white/90 rounded-2xl p-5 border border-slate-100 shadow-sm halo-glow-hover transition-all duration-200 cursor-pointer flex flex-col justify-between group">
-                    <div>
-                        <!-- Card Top Badge & Halo Circle -->
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-schale-50 text-schale-600 border border-schale-200">
-                                ${char.academy}
-                            </span>
-                            <div class="w-12 h-12 rounded-full border-2 border-schale-400 bg-slate-900 shadow-sm group-hover:scale-110 transition-transform flex items-center justify-center p-2 halo-glow">
-                                ${char.halo ? `
-                                    <img src="${char.halo}" alt="${char.name} Halo" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(77,238,234,0.6)]">
-                                ` : `
-                                    <i data-lucide="sparkles" class="w-5 h-5 text-schale-400"></i>
-                                `}
-                            </div>
-                        </div>
-
-                        <!-- Student Name -->
-                        <h3 class="font-tech text-xl font-bold text-slate-800 group-hover:text-schale-500 transition-colors">
-                            ${char.name}
-                        </h3>
-                        <p class="text-xs text-slate-500 mb-4 line-clamp-1">${char.title}</p>
-
-                        <!-- Details Grid -->
-                        <div class="grid grid-cols-2 gap-2 text-xs mb-4 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                            <div>
-                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Role</span>
-                                <span class="font-medium text-slate-700">${char.role}</span>
-                            </div>
-                            <div>
-                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Weapon</span>
-                                <span class="font-medium text-slate-700">${char.weapon}</span>
-                            </div>
-                        </div>
-
-                        <!-- Snippet -->
-                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
-                            ${char.lore}
-                        </p>
-                    </div>
-
-                    <!-- Footer Tags -->
-                    <div class="flex flex-wrap gap-1 pt-2 border-t border-slate-100">
-                        ${char.tags.slice(0, 3).map(tag => `
-                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded">#${tag}</span>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
 
             lucide.createIcons();
         }
@@ -719,7 +799,7 @@
 
             copyProfileBtn.addEventListener('click', () => {
                 if (!activeStudentForCopy) return;
-                const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks.q.map ? activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n') : ''}\n`;
+                const formatted = `\n--- [${activeStudentForCopy.name} - ${activeStudentForCopy.academy}] ---\nRole: ${activeStudentForCopy.role}\nWeapon: ${activeStudentForCopy.weapon}\nPersonality Note: ${activeStudentForCopy.lore}\nQuirks:\n${activeStudentForCopy.quirks ? activeStudentForCopy.quirks.map(q => ' - ' + q).join('\n') : ''}\n`;
                 
                 scratchpadText.value += formatted;
                 saveScratchpad();
