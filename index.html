@@ -292,14 +292,34 @@ let openAcademies = new Set();
         // Character Database Array
         const characters = [
             {
+                id: 'gsc_president',
+                name: 'GSC President',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'President of the General Student Council | Leader of Kivotos | Top Administrator of the Sanctum Tower',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'The Missing President of the General Student Council',
+                image: 'images/GSC_President_Portrait.webp',
+                halo: 'images/GSC_President_Halo.webp',
+                lore: 'The enigmatic and elusive president of the General Student Council whose sudden disappearance kicks off the entire events of Blue Archive. She is the one who reached out across time and space to bring Sensei to Kivotos.',
+                quirks: [
+                    'Vanished without a trace, leaving the GSC and all of Kivotos in turmoil.',
+                    'Left behind cryptic messages and immense responsibilities for Rin and Sensei.',
+                    'Possesses a profound connection to the mysteries underlying Kivotos.'
+                ],
+                tags: ['GSC', 'President', 'Mystery', 'Non-Playable']
+            },
+            {
                 id: 'rin',
                 name: 'Nanagami Rin',
                 academy: 'General Student Council',
                 club: 'General Student Council',
-                role: 'Special / Support',
+                role: 'Vice President of the General Student Council | Chief Administrative Officer | Acting Leader of Kivotos',
                 weapon: 'HG (Handgun)',
-                attackType: 'Normal',
-                defenseType: 'Normal',
+                attackType: 'N/A',
+                defenseType: 'N/A',
                 title: 'Main Pillar of the General Student Council',
                 image: 'images/Rin_Portrait.webp',
                 halo: 'images/Rin_Halo.webp',
@@ -309,7 +329,123 @@ let openAcademies = new Set();
                     'Strict and professional, but deeply relies on Sensei behind closed doors.',
                     'Sharp-tongued when dealing with unruly club presidents.'
                 ],
-                tags: ['GSC', 'Support', 'Administrator', 'Handgun']
+                tags: ['GSC', 'Non-Playable', 'Vice President', 'Handgun']
+            },
+            {
+                id: 'momoka',
+                name: 'Yuragi Momoka',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'Administrative Officer',
+                weapon: 'None',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'The Slacking GSC Troublemaker',
+                image: 'images/Momoka_Portrait.webp',
+                halo: 'images/Momoka_Halo.webp',
+                lore: 'A member of the General Student Council who spends most of her time slacking off, eating potato chips, and teasing Sensei or her stressed-out colleagues like Rin. Despite her lazy and carefree attitude, she can be surprisingly sharp when it counts.',
+                quirks: [
+                    'Always seen snacking on chips or finding ways to ditch work.',
+                    'Enjoys casually teasing Rin and putting her on edge.',
+                    'Surprisingly perceptive despite acting completely carefree.'
+                ],
+                tags: ['GSC', 'Non-Playable', 'Snacks']
+            },
+            {
+                id: 'ayumu',
+                name: 'Iwabitsu Ayumu',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'Executive Officer\'s Secretary',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'The Dedicated GSC Operations Aide',
+                image: 'images/Ayumu_Portrait.webp',
+                halo: 'images/Ayumu_Halo.webp',
+                lore: 'A gentle, soft-spoken, and deeply dedicated member of the General Student Council. Always seen carrying towering stacks of documents, she works tirelessly behind the scenes to keep Kivotos running while worrying over her overworked peers.',
+                quirks: [
+                    'Constantly balancing massive, hazardous towers of paperwork.',
+                    'Polite, soft-spoken, and deeply respectful to Sensei.',
+                    'Easily flustered by the chaotic antics of Momoka and other council members.'
+                ],
+                tags: ['GSC', 'Non-Playable', 'Paperwork']
+            },
+            {
+                id: 'aoi',
+                name: 'Oki Aoi',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'Chief Finance Officer',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'The Composed GSC Public Relations Chief',
+                image: 'images/Aoi_Portrait.webp',
+                halo: 'images/Aoi_Halo.webp',
+                lore: 'A high-ranking official within the General Student Council who primarily manages public relations, official communications, and political affairs. She is remarkably poised, diplomatic, and maintains a cool, collected head even during severe crises.',
+                quirks: [
+                    'Always immaculately dressed and composed, rarely showing panic.',
+                    'Expert at diplomatic maneuvering and handling public statements for Kivotos.',
+                    'Deeply respects protocol and administrative order.'
+                ],
+                tags: ['GSC', 'Chief Finance Officer', 'Diplomat', 'Non-Playable']
+            },
+            {
+                id: 'haine',
+                name: 'Haine',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'Chief PE Officer',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'N/A',
+                image: 'images/Haine_Portrait.webp',
+                halo: 'images/Haine_Halo.webp',
+                lore: 'The chief of the General Student Council\'s Physical Education Office. As much as she tries to give effort to her duties, bad luck seems to be following her frequently. She had only healed from her fractured arm before problems began arising around her, following her duties.',
+                quirks: [
+                    'N/A',
+                ],
+                tags: ['GSC', 'Non-Playable']
+            },
+            {
+                id: 'sumomo',
+                name: 'Yakushi Sumomo',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'N/A',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'N/A',
+                image: 'images/Sumomo_Portrait.webp',
+                halo: 'images/Sumomo_Halo.webp',
+                lore: 'N/A',
+                quirks: [
+                    'N/A',
+                ],
+                tags: ['GSC', 'Non-Playable', 'Horns']
+            },
+            {
+                id: 'kaya',
+                name: 'Shiranui Kaya',
+                academy: 'General Student Council',
+                club: 'General Student Council',
+                role: 'Chief Defense Officer',
+                weapon: 'N/A',
+                attackType: 'N/A',
+                defenseType: 'N/A',
+                title: 'GSC Defense & Security Administrator',
+                image: 'images/Kaya_Portrait.webp',
+                halo: 'images/Kaya_Halo.webp',
+                lore: 'A high-ranking member of the General Student Council in charge of defense and security affairs. Beneath her polite, soft-spoken smile and cute pink hair lies intense political ambition and a desire to reshape the power structure of Kivotos. She had been through alot during her custody as an inmate, as her mental and physical body has changed since then...',
+                quirks: [
+                    'Always maintains a sweet, calm smile while plotting grand ambitions.',
+                    'Deeply interested in political leverage and restructuring GSC authority.',
+                    'Often clashes with Rin over the proper direction and future of Kivotos.'
+                ],
+                tags: ['GSC', 'Ambitious', 'Non-Playable']
             },
             {
                 id: 'shiroko',
